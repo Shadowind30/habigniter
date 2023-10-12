@@ -1,0 +1,33 @@
+<ion-card>
+  <ion-card-header>
+    <ion-row>
+      <ion-col>
+        <ion-card-title>{{activity?.title}}</ion-card-title>
+      </ion-col>
+      <ion-col>
+        <ion-icon name="flame-outline" color="medium"></ion-icon>
+        <ion-label>{{activity?.streak}} {{activity?.streak !== 1 ? 'dias' : 'dia'}}</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-card-subtitle color="danger">{{activity?.status === 'pending' ?  'Pendiente' : 'Completado'}}</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-grid>
+      <ion-row>
+          <ion-col>
+            <ion-button color="danger" fill="clear">
+              <ion-icon slot="start" name="trash"></ion-icon>
+              <ion-label>Eliminar</ion-label>
+            </ion-button>
+          </ion-col>
+        <ion-col>
+          <ion-button>
+            <ion-icon slot="start" name="checkmark-circle"></ion-icon>
+            <ion-label>Completar</ion-label>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>
