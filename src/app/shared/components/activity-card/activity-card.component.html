@@ -2,7 +2,7 @@
   <ion-card-header>
     <ion-row>
       <ion-col>
-        <ion-card-title>{{activity?.title}}</ion-card-title>
+        <ion-card-title (click)="edit.emit()">{{activity?.title}}</ion-card-title>
       </ion-col>
       <ion-col>
         <ion-icon name="flame-outline" color="medium"></ion-icon>

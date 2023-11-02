@@ -29,6 +29,8 @@ export class HomePage {
       id: '1',
     },
   ];
+
+  private activityBeingEdited: IActivityItem;
   constructor(private alertsService: AlertsService) {}
 
   public async addActivity(): Promise<void> {
@@ -36,7 +38,15 @@ export class HomePage {
       this.alertsService.simpleAlert(this.errorMessage);
       return;
     }
-
+    if (this.activityBeingEdited) {
+      const index = this.activities.findIndex(
+        (activity) => activity.id === this.activityBeingEdited.id
+      );
+      this.activities[index].title = this.nameValue;
+      this.resetForm();
+      this.modal.dismiss();
+      return;
+    }
     this.activities.push({
       title: this.nameValue,
       status: 'pending',
@@ -49,7 +59,18 @@ export class HomePage {
     this.nameValue = null;
   }
 
+  public enableEditMode(activity: IActivityItem): void {
+    this.activityBeingEdited = activity;
+    this.nameValue = activity.title;
+    this.modal.present();
+  }
+
   private checkValidity(): boolean {
     return this.nameValue && this.nameValue.length >= 3;
+  }
+
+  private resetForm(): void {
+    this.nameValue = null;
+    this.activityBeingEdited = null;
   }
 }
