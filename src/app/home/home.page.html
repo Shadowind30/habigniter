@@ -8,7 +8,7 @@
     <ion-row>
       <ion-col>
         <app-activity-card [activity]="activity" *ngFor="let activity of activities"
-          (edit)="enableEditMode(activity)"></app-activity-card>
+          (edit)="enableEditMode(activity)" (delete)="deleteActivity(activity?.id)"></app-activity-card>
       </ion-col>
     </ion-row>
     <ion-row>

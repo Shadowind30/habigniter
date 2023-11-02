@@ -65,6 +65,10 @@ export class HomePage {
     this.modal.present();
   }
 
+  public deleteActivity(id: string): void {
+    this.activities = this.activities.filter(activity => activity.id !== id);
+  }
+
   private checkValidity(): boolean {
     return this.nameValue && this.nameValue.length >= 3;
   }
