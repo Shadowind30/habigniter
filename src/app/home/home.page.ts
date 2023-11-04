@@ -25,9 +25,12 @@ export class HomePage implements OnInit {
   public activities: IActivityItem[] = [];
 
   private activityBeingEdited: IActivityItem;
-  constructor(private alertsService: AlertsService, private localDBService: LocalDbService) {}
+  constructor(
+    private alertsService: AlertsService,
+    private localDBService: LocalDbService
+  ) {}
 
-   public ngOnInit(): void {
+  public ngOnInit(): void {
     this.activities = this.localDBService.Activities;
   }
 
@@ -65,8 +68,14 @@ export class HomePage implements OnInit {
     this.modal.present();
   }
 
-  public deleteActivity(id: string): void {
-    this.activities = this.activities.filter(activity => activity.id !== id);
+  public async deleteActivity(id: string): Promise<void> {
+    const shouldContinue = await this.alertsService.confirmationAlert({
+      header: 'Deseas borrar este habito?',
+      subHeader: 'Esta accion no se puede deshacer',
+      confirmText: 'Eliminar',
+    });
+    if (!shouldContinue) return;
+    this.activities = this.activities.filter((activity) => activity.id !== id);
     this.saveActivities();
   }
 
