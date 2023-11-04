@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { IActivityItem } from '@shared/models';
 import { AlertsService } from '@shared/providers/utilities/alerts.service';
@@ -6,6 +6,8 @@ import {
   getInitialDateISOString,
   getRandomID,
 } from '@shared/utilities/helpers.functions';
+import { LocalDbService } from '@shared/providers/external/local-db.service';
+import { DBKeysEnum } from '@shared/enums/db-keys.enum';
 
 @Component({
   selector: 'app-home',
@@ -14,24 +16,20 @@ import {
   standalone: true,
   imports: [SharedModule],
 })
-export class HomePage {
+export class HomePage implements OnInit {
   @ViewChild('form') modal: HTMLIonModalElement;
   public modalHeight = 260 / window.innerHeight;
   public nameValue: string;
   public errorMessage = 'El nombre debe de contener al menos 3 caracteres';
 
-  public activities: IActivityItem[] = [
-    {
-      title: 'Read 20 pages of a book',
-      status: 'pending',
-      createdAt: '2020-01-01T00:00:00.000Z',
-      streak: 0,
-      id: '1',
-    },
-  ];
+  public activities: IActivityItem[] = [];
 
   private activityBeingEdited: IActivityItem;
-  constructor(private alertsService: AlertsService) {}
+  constructor(private alertsService: AlertsService, private localDBService: LocalDbService) {}
+
+   public ngOnInit(): void {
+    this.activities = this.localDBService.Activities;
+  }
 
   public async addActivity(): Promise<void> {
     if (!this.checkValidity()) {
@@ -45,6 +43,7 @@ export class HomePage {
       this.activities[index].title = this.nameValue;
       this.resetForm();
       this.modal.dismiss();
+      this.saveActivities();
       return;
     }
     this.activities.push({
@@ -57,6 +56,7 @@ export class HomePage {
 
     this.modal.dismiss();
     this.nameValue = null;
+    this.saveActivities();
   }
 
   public enableEditMode(activity: IActivityItem): void {
@@ -67,6 +67,7 @@ export class HomePage {
 
   public deleteActivity(id: string): void {
     this.activities = this.activities.filter(activity => activity.id !== id);
+    this.saveActivities();
   }
 
   private checkValidity(): boolean {
@@ -76,5 +77,9 @@ export class HomePage {
   private resetForm(): void {
     this.nameValue = null;
     this.activityBeingEdited = null;
+  }
+
+  private async saveActivities(): Promise<void> {
+    this.localDBService.saveData(DBKeysEnum.ACTIVITIES, this.activities);
   }
 }
