@@ -26,7 +26,7 @@ export class AlertsService {
     subHeader?: string;
     cancelText?: string;
     confirmText?: string;
-  }): Promise<HTMLIonAlertElement> {
+  }): Promise<boolean> {
     const { cancelText, confirmText, ...rest } = options;
     const btnCancelText = cancelText || 'Cancelar';
     const btnConfirmText = confirmText || 'Confirmar';
@@ -42,7 +42,11 @@ export class AlertsService {
       },
     ];
 
-    return this.alertBuilder({ ...rest, buttons });
+    const alert = await this.alertBuilder({ ...rest, buttons });
+
+    const {role} = await alert.onDidDismiss();
+
+    return role === RolesEnum.CONFIRM;
   }
 
   /** Closes every alert that is active at the moment of calling*/
