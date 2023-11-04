@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { IActivityItem } from '@shared/models';
-import { AlertsService } from '@shared/utilities/alerts.service';
+import { AlertsService } from '@shared/providers/utilities/alerts.service';
 import {
   getInitialDateISOString,
   getRandomID,
