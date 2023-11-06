@@ -23,8 +23,8 @@ export class HomePage implements OnInit {
   public errorMessage = 'El nombre debe de contener al menos 3 caracteres';
 
   public activities: IActivityItem[] = [];
+  public activityBeingEdited: IActivityItem;
 
-  private activityBeingEdited: IActivityItem;
   constructor(
     private alertsService: AlertsService,
     private localDBService: LocalDbService
