@@ -22,7 +22,7 @@
   </ion-grid>
 </ion-content>
 
-<ion-modal #form trigger="open-modal" [breakpoints]="[modalHeight]" [initialBreakpoint]="modalHeight"
+<ion-modal (onDidDismiss)="resetForm()" #form trigger="open-modal" [breakpoints]="[modalHeight]" [initialBreakpoint]="modalHeight"
   [backdropDismiss]="true">
   <ng-template>
     <ion-content>

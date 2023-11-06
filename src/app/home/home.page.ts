@@ -82,8 +82,8 @@ export class HomePage implements OnInit {
   private checkValidity(): boolean {
     return this.nameValue && this.nameValue.length >= 3;
   }
-
-  private resetForm(): void {
+  
+  public resetForm(): void {
     this.nameValue = null;
     this.activityBeingEdited = null;
   }
