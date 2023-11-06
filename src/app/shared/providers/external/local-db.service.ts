@@ -16,17 +16,19 @@ export class LocalDbService {
   }
 
   public async loadData() {
+    const self: any = this;
     const res = await Preferences.keys();
     const keys: DBKeysEnum[] = res.keys as DBKeysEnum[];
     keys.forEach(async (key) => {
       const res = await Preferences.get({ key });
       const value: Values = JSON.parse(res.value);
-      this[key] = value;
+      self[key] = value;
     });
   }
 
   public async saveData(key: DBKeysEnum, value: Values) {
-    this[key] = value;
+    const self: any = this;
+    self[key] = value;
     Preferences.set({
       key,
       value: JSON.stringify(value),
