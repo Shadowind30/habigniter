@@ -1,21 +1,21 @@
-export const getLocaleDateISOString = () => {
-  const date = new Date();
-  const offset = date.getTimezoneOffset() / 60;
-  date.setHours(date.getHours() - offset);
-
-  const ISOString = date.toISOString();
-  console.log('[getLocaleDateISOString] current date: ' + ISOString);
-  return ISOString;
+export const getDate = () => {
+  const date = buildLocalDateFromCurrentUTC().split('T')[0];
+  console.log("[getDate] today's date in YYYY-MM-DD: " + date);
+  return date;
 };
 
-export const getInitialDateISOString = () => {
-  const date = new Date(getLocaleDateISOString());
-  date.setHours(0, 0, 0, 0);
-  const ISOString = date.toISOString();
-  console.log("[getLocaleDateISOString] today's date at midnight: " + ISOString);
-  return ISOString;
-};
+export const dateToNumber = (date: string): number => {
+  return Number(date.split('-').join(''));
+}
 
 export const getRandomID = (): string => {
     return window.crypto.randomUUID()
+}
+
+export const buildLocalDateFromCurrentUTC = () => {
+  const currentUTCDate = new Date();
+  const userOffsetMinutes = currentUTCDate.getTimezoneOffset();
+  const utcWithUserOffset = new Date(currentUTCDate.getTime() - (userOffsetMinutes * 60 * 1000));
+
+  return utcWithUserOffset.toISOString();
 }

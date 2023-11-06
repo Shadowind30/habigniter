@@ -3,7 +3,7 @@ import { SharedModule } from '../shared/shared.module';
 import { IActivityItem } from '@shared/models';
 import { AlertsService } from '@shared/providers/utilities/alerts.service';
 import {
-  getInitialDateISOString,
+  getDate,
   getRandomID,
 } from '@shared/utilities/helpers.functions';
 import { LocalDbService } from '@shared/providers/external/local-db.service';
@@ -52,7 +52,7 @@ export class HomePage implements OnInit {
     this.activities.push({
       title: this.nameValue,
       status: 'pending',
-      createdAt: getInitialDateISOString(),
+      createdAt: getDate(),
       streak: 0,
       id: getRandomID(),
     });
