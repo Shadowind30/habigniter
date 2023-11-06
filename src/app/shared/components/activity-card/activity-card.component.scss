@@ -1,6 +1,16 @@
 .pencil-icon {
-    scale: 0.75;
-    position: relative;
-    top: 5px;
-    right: 5px;
+  scale: 0.75;
+  position: relative;
+  top: 5px;
+  right: 5px;
+}
+
+.counter {
+  ion-icon {
+    scale: 2;
+  }
+  ion-label {
+    margin-left: 0.5rem;
+    font-size: 20px;
+  }
 }

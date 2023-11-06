@@ -1,30 +1,35 @@
 <ion-card>
   <ion-card-header>
     <ion-row>
-      <ion-col>
-        <ion-card-title (click)="edit.emit()">{{activity?.title}} <ion-icon color="medium" class="pencil-icon" name="pencil"></ion-icon></ion-card-title>
+      <ion-col size="8">
+        <ion-card-title (click)="edit.emit()">{{activity?.title}} <ion-icon color="medium" class="pencil-icon"
+            name="pencil"></ion-icon></ion-card-title>
       </ion-col>
-      <ion-col>
-        <ion-icon name="flame-outline" color="medium"></ion-icon>
-        <ion-label>{{activity?.streak}} {{activity?.streak !== 1 ? 'dias' : 'dia'}}</ion-label>
+      <ion-col class="counter" size="4">
+        <ion-icon [name]="activity?.status === 'pending' ? 'flame-outline' : 'flame'" [color]="activity?.status === 'pending' ? 'medium' : 'warning'"></ion-icon>
+        <ion-label [color]="activity?.status === 'pending' ? 'medium' : 'warning'">{{activity?.streak}}
+          {{activity?.streak !== 1 ? 'dias' : 'dia'}}</ion-label>
       </ion-col>
     </ion-row>
-    <ion-card-subtitle color="danger">{{activity?.status === 'pending' ?  'Pendiente' : 'Completado'}}</ion-card-subtitle>
+    <ion-card-subtitle [color]="activity?.status === 'pending' ? 'danger' : 'success'">{{activity?.status === 'pending'
+      ? 'Pendiente' :
+      'Completado'}}</ion-card-subtitle>
   </ion-card-header>
 
   <ion-card-content>
     <ion-grid>
       <ion-row>
-          <ion-col>
-            <ion-button (click)="delete.emit()" color="danger" fill="clear">
-              <ion-icon slot="start" name="trash"></ion-icon>
-              <ion-label>Eliminar</ion-label>
-            </ion-button>
-          </ion-col>
-        <ion-col>
-          <ion-button>
+        <ion-col size="6">
+          <ion-button (click)="delete.emit()" color="danger" fill="clear">
+            <ion-icon slot="start" name="trash"></ion-icon>
+            <ion-label>Eliminar</ion-label>
+          </ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button [disabled]="activity?.status === 'completed'" (click)="complete.emit()"
+            [color]="activity?.status === 'pending' ? 'primary' : 'medium'">
             <ion-icon slot="start" name="checkmark-circle"></ion-icon>
-          <ion-label>Completar</ion-label>
+            <ion-label>{{activity?.status === 'pending' ? 'Completar' : 'Completado'}}</ion-label>
           </ion-button>
         </ion-col>
       </ion-row>

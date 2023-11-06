@@ -79,14 +79,20 @@ export class HomePage implements OnInit {
     this.saveActivities();
   }
 
-  private checkValidity(): boolean {
-    return this.nameValue && this.nameValue.length >= 3;
+  public completeActivity(index: number): void {
+    this.activities[index].streak++;
+    this.activities[index].status = 'completed';
+    this.saveActivities();
   }
   
   public resetForm(): void {
     this.nameValue = null;
     this.activityBeingEdited = null;
   }
+  private checkValidity(): boolean {
+    return this.nameValue && this.nameValue.length >= 3;
+  }
+
 
   private async saveActivities(): Promise<void> {
     this.localDBService.saveData(DBKeysEnum.ACTIVITIES, this.activities);
