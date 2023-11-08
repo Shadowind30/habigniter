@@ -1,13 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { IActivityItem } from '@shared/models';
 import { AlertsService } from '@shared/providers/utilities/alerts.service';
-import {
-  getDate,
-  getRandomID,
-} from '@shared/utilities/helpers.functions';
+import { getDate, getRandomID } from '@shared/utilities/helpers.functions';
 import { LocalDbService } from '@shared/providers/external/local-db.service';
 import { DBKeysEnum } from '@shared/enums/db-keys.enum';
+import { InternalClockService } from '@shared/providers/core/internal-clock.service';
 
 @Component({
   selector: 'app-home',
@@ -25,13 +23,18 @@ export class HomePage implements OnInit {
   public activities: IActivityItem[] = [];
   public activityBeingEdited: IActivityItem;
 
-  constructor(
-    private alertsService: AlertsService,
-    private localDBService: LocalDbService
-  ) {}
+  private alertsService = inject(AlertsService);
+  private localDBService = inject(LocalDbService);
+  private internalClockService = inject(InternalClockService);
 
   public ngOnInit(): void {
+    this.internalClockService.onUpdateActivity.subscribe(() => {
+      this.activities = this.internalClockService.updateActivitiesState(
+        this.activities
+      );
+    });
     this.activities = this.localDBService.Activities;
+    this.internalClockService.initialize();
   }
 
   public async addActivity(): Promise<void> {
@@ -84,7 +87,7 @@ export class HomePage implements OnInit {
     this.activities[index].status = 'completed';
     this.saveActivities();
   }
-  
+
   public resetForm(): void {
     this.nameValue = null;
     this.activityBeingEdited = null;
@@ -92,7 +95,6 @@ export class HomePage implements OnInit {
   private checkValidity(): boolean {
     return this.nameValue && this.nameValue.length >= 3;
   }
-
 
   private async saveActivities(): Promise<void> {
     this.localDBService.saveData(DBKeysEnum.ACTIVITIES, this.activities);

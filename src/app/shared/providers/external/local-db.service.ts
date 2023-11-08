@@ -3,16 +3,21 @@ import { Preferences } from '@capacitor/preferences';
 import { DBKeysEnum } from '@shared/enums/db-keys.enum';
 import { IActivityItem } from '@shared/models';
 
-type Values = IActivityItem[];
+type Values = IActivityItem[] | number;
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocalDbService {
   private activities: IActivityItem[] = [];
+  private savedDay: number;
 
   public get Activities(): IActivityItem[] {
     return this.activities;
+  }
+
+  public get SavedDay(): number {
+    return this.savedDay;
   }
 
   public async loadData() {
