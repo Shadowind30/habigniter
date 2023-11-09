@@ -1,4 +1,4 @@
-# SW Tracker
+# Habigniter
 
 La app permitirá a los usuarios registrar actividades que estos deseen convertir en un hábito, luego los usuarios deben volver cada día a marcar la actividad como completada. La app entonces irá contando la cantidad de días para cada actividad en específico a medida que se vayan completando con el pasar del tiempo.
 
