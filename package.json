@@ -10,7 +10,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "format": "npx prettier --config .prettierrc \"./src/**/*.{ts,html,scss}\" --write"
+    "format": "npx prettier --config .prettierrc \"./src/**/*.{ts,html,scss}\" --write",
+    "deploy": "ionic build --prod && firebase deploy"
+
   },
   "private": true,
   "dependencies": {
