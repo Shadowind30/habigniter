@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { IActivityItem } from '@shared/models';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class InternalClockService {
   private _updateActivitiesSubject = new Subject<void>();
@@ -36,11 +36,8 @@ export class InternalClockService {
   }
   private checkDate() {
     if (this.isSameDay()) return;
-    const currentDay = getDate();;
-    this.localDBService.saveData(
-      DBKeysEnum.SAVED_DAY,
-      dateToNumber(currentDay)
-    );
+    const currentDay = getDate();
+    this.localDBService.saveData(DBKeysEnum.SAVED_DAY, dateToNumber(currentDay));
     this._updateActivitiesSubject.next();
   }
 
@@ -49,6 +46,6 @@ export class InternalClockService {
     const savedDay = this.localDBService.SavedDay;
     const check = dateToNumber(currentDay) === savedDay;
     console.log('[CLOCK] Is same day?', check);
-    return  check;
+    return check;
   }
 }

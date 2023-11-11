@@ -1,4 +1,4 @@
 export enum RolesEnum {
-    CANCEL = 'CANCEL',
-    CONFIRM = 'CONFIRM'
+  CANCEL = 'CANCEL',
+  CONFIRM = 'CONFIRM'
 }

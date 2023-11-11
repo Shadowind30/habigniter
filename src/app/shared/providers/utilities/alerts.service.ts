@@ -3,20 +3,17 @@ import { AlertButton, AlertController, AlertOptions } from '@ionic/angular';
 import { RolesEnum } from '@shared/enums/roles.enum';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AlertsService {
   constructor(private alertCtrl: AlertController) {}
 
-  public async simpleAlert(
-    header: string,
-    subHeader?: string
-  ): Promise<HTMLIonAlertElement> {
+  public async simpleAlert(header: string, subHeader?: string): Promise<HTMLIonAlertElement> {
     const button = ['Entendido'];
     const options = {
       header,
       subHeader,
-      buttons: button,
+      buttons: button
     };
     return this.alertBuilder({ ...options });
   }
@@ -34,17 +31,17 @@ export class AlertsService {
     const buttons: AlertButton[] = [
       {
         text: btnCancelText,
-        role: RolesEnum.CANCEL,
+        role: RolesEnum.CANCEL
       },
       {
         text: btnConfirmText,
-        role: RolesEnum.CONFIRM,
-      },
+        role: RolesEnum.CONFIRM
+      }
     ];
 
     const alert = await this.alertBuilder({ ...rest, buttons });
 
-    const {role} = await alert.onDidDismiss();
+    const { role } = await alert.onDidDismiss();
 
     return role === RolesEnum.CONFIRM;
   }
@@ -58,9 +55,7 @@ export class AlertsService {
     }
   }
 
-  private async alertBuilder(
-    options: AlertOptions
-  ): Promise<HTMLIonAlertElement> {
+  private async alertBuilder(options: AlertOptions): Promise<HTMLIonAlertElement> {
     const alert = await this.alertCtrl.create(options);
     await alert.present();
     return alert;

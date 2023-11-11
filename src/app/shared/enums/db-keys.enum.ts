@@ -1,4 +1,4 @@
 export enum DBKeysEnum {
-    ACTIVITIES = 'activities',
-    SAVED_DAY = 'savedDay'
+  ACTIVITIES = 'activities',
+  SAVED_DAY = 'savedDay'
 }

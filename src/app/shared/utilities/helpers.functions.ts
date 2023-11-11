@@ -6,16 +6,16 @@ export const getDate = () => {
 
 export const dateToNumber = (date: string): number => {
   return Number(date.split('-').join(''));
-}
+};
 
 export const getRandomID = (): string => {
-    return window.crypto.randomUUID()
-}
+  return window.crypto.randomUUID();
+};
 
 export const buildLocalDateFromCurrentUTC = () => {
   const currentUTCDate = new Date();
   const userOffsetMinutes = currentUTCDate.getTimezoneOffset();
-  const utcWithUserOffset = new Date(currentUTCDate.getTime() - (userOffsetMinutes * 60 * 1000));
+  const utcWithUserOffset = new Date(currentUTCDate.getTime() - userOffsetMinutes * 60 * 1000);
 
   return utcWithUserOffset.toISOString();
-}
+};

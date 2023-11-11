@@ -12,4 +12,4 @@ const imports = [IonicModule, FormsModule, CommonModule];
   imports,
   exports: [declarations, imports]
 })
-export class SharedModule { }
+export class SharedModule {}

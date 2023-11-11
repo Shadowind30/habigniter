@@ -1,5 +1,3 @@
-import { ActivityCardComponent } from "./activity-card/activity-card.component";
+import { ActivityCardComponent } from './activity-card/activity-card.component';
 
-export const COMPONENTS = [
-    ActivityCardComponent
-];
+export const COMPONENTS = [ActivityCardComponent];

@@ -6,7 +6,7 @@ import { IActivityItem } from '@shared/models';
 type Values = IActivityItem[] | number;
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class LocalDbService {
   private activities: IActivityItem[] = [];
@@ -36,7 +36,7 @@ export class LocalDbService {
     self[key] = value;
     Preferences.set({
       key,
-      value: JSON.stringify(value),
+      value: JSON.stringify(value)
     });
   }
 }

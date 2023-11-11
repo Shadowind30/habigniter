@@ -7,12 +7,10 @@ import { LocalDbService } from '@shared/providers/external/local-db.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [IonicModule],
+  imports: [IonicModule]
 })
 export class AppComponent {
-  constructor(
-    private localDBService: LocalDbService,
-  ) {
+  constructor(private localDBService: LocalDbService) {
     this.initData();
   }
 

@@ -7,8 +7,13 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <app-activity-card [activity]="activity" *ngFor="let activity of activities; index as ind"
-          (edit)="enableEditMode(activity)" (delete)="deleteActivity(activity?.id)" (complete)="completeActivity(ind)"></app-activity-card>
+        <app-activity-card
+          [activity]="activity"
+          *ngFor="let activity of activities; index as ind"
+          (edit)="enableEditMode(activity)"
+          (delete)="deleteActivity(activity?.id)"
+          (complete)="completeActivity(ind)"
+        ></app-activity-card>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -22,8 +27,14 @@
   </ion-grid>
 </ion-content>
 
-<ion-modal (onDidDismiss)="resetForm()" #form trigger="open-modal" [breakpoints]="[modalHeight]" [initialBreakpoint]="modalHeight"
-  [backdropDismiss]="true">
+<ion-modal
+  (onDidDismiss)="resetForm()"
+  #form
+  trigger="open-modal"
+  [breakpoints]="[modalHeight]"
+  [initialBreakpoint]="modalHeight"
+  [backdropDismiss]="true"
+>
   <ng-template>
     <ion-content>
       <ion-grid>

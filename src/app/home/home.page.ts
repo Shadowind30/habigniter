@@ -12,7 +12,7 @@ import { InternalClockService } from '@shared/providers/core/internal-clock.serv
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [SharedModule],
+  imports: [SharedModule]
 })
 export class HomePage implements OnInit {
   @ViewChild('form') modal: HTMLIonModalElement;
@@ -29,9 +29,7 @@ export class HomePage implements OnInit {
 
   public ngOnInit(): void {
     this.internalClockService.onUpdateActivity.subscribe(() => {
-      this.activities = this.internalClockService.updateActivitiesState(
-        this.activities
-      );
+      this.activities = this.internalClockService.updateActivitiesState(this.activities);
     });
     this.activities = this.localDBService.Activities;
     this.internalClockService.initialize();
@@ -43,9 +41,7 @@ export class HomePage implements OnInit {
       return;
     }
     if (this.activityBeingEdited) {
-      const index = this.activities.findIndex(
-        (activity) => activity.id === this.activityBeingEdited.id
-      );
+      const index = this.activities.findIndex((activity) => activity.id === this.activityBeingEdited.id);
       this.activities[index].title = this.nameValue;
       this.resetForm();
       this.modal.dismiss();
@@ -57,7 +53,7 @@ export class HomePage implements OnInit {
       status: 'pending',
       createdAt: getDate(),
       streak: 0,
-      id: getRandomID(),
+      id: getRandomID()
     });
 
     this.modal.dismiss();
@@ -75,7 +71,7 @@ export class HomePage implements OnInit {
     const shouldContinue = await this.alertsService.confirmationAlert({
       header: 'Deseas borrar este habito?',
       subHeader: 'Esta accion no se puede deshacer',
-      confirmText: 'Eliminar',
+      confirmText: 'Eliminar'
     });
     if (!shouldContinue) return;
     this.activities = this.activities.filter((activity) => activity.id !== id);
