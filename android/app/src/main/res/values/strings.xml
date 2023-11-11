@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Habigniter</string>
+    <string name="title_activity_main">Habigniter</string>
+    <string name="package_name">com.sw30.habigniter</string>
+    <string name="custom_url_scheme">com.sw30.habigniter</string>
+</resources>

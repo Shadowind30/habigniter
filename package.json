@@ -12,7 +12,6 @@
     "lint": "ng lint",
     "format": "npx prettier --config .prettierrc \"./src/**/*.{ts,html,scss}\" --write",
     "deploy": "ionic build --prod && firebase deploy"
-
   },
   "private": true,
   "dependencies": {
@@ -25,6 +24,7 @@
     "@angular/platform-browser-dynamic": "^16.0.0",
     "@angular/router": "^16.0.0",
     "@angular/service-worker": "^16.0.0",
+    "@capacitor/android": "^5.4.1",
     "@capacitor/app": "5.0.6",
     "@capacitor/core": "5.4.1",
     "@capacitor/haptics": "5.0.6",
