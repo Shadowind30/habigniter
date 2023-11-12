@@ -19,9 +19,10 @@ export class AppComponent {
   }
 
   private async initData(): Promise<void> {
-    this.navCtrl.navigateRoot('/home');
+    SplashScreen.show();
     await this.localDBService.init();
     await this.navCtrl.navigateRoot('/home');
+    setTimeout(() => SplashScreen.hide(), 2000);
   }
 
   // internalClockSimulator() {
