@@ -28,6 +28,7 @@ export class LocalDbService {
       const res = await Preferences.get({ key });
       const value: Values = JSON.parse(res.value);
       self[key] = value;
+      console.log('[LocalDB] loading ', key, value);
     });
   }
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 import { LocalDbService } from '@shared/providers/external/local-db.service';
 
 @Component({
@@ -10,12 +10,13 @@ import { LocalDbService } from '@shared/providers/external/local-db.service';
   imports: [IonicModule]
 })
 export class AppComponent {
-  constructor(private localDBService: LocalDbService) {
+  constructor(private localDBService: LocalDbService, private navCtrl: NavController) {
     this.initData();
   }
 
   private async initData(): Promise<void> {
     await this.localDBService.loadData();
+    this.navCtrl.navigateRoot('/home');
   }
 
   // internalClockSimulator() {
