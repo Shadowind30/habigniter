@@ -31,12 +31,11 @@
   (onDidDismiss)="resetForm()"
   #form
   trigger="open-modal"
-  [breakpoints]="[modalHeight]"
-  [initialBreakpoint]="modalHeight"
+  cssClass="auto-height"
   [backdropDismiss]="true"
 >
   <ng-template>
-    <ion-content>
+    <div class="content">
       <ion-grid>
         <ion-row>
           <ion-col>
@@ -52,13 +51,13 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <ion-button (click)="addActivity()" size="large">
+            <ion-button expand="block" (click)="addActivity()" size="large">
               <ion-icon slot="start" name="add"></ion-icon>
               <ion-label>Guardar</ion-label>
             </ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
-    </ion-content>
+    </div>
   </ng-template>
 </ion-modal>
