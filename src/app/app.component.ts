@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { SplashScreen } from '@capacitor/splash-screen';
+import { IonicModule, NavController } from '@ionic/angular';
 import { LocalDbService } from '@shared/providers/external/local-db.service';
 
 @Component({
@@ -10,12 +11,18 @@ import { LocalDbService } from '@shared/providers/external/local-db.service';
   imports: [IonicModule]
 })
 export class AppComponent {
-  constructor(private localDBService: LocalDbService) {
+  constructor(
+    private localDBService: LocalDbService,
+    private navCtrl: NavController
+  ) {
     this.initData();
   }
 
   private async initData(): Promise<void> {
-    await this.localDBService.loadData();
+    SplashScreen.show();
+    await this.localDBService.init();
+    await this.navCtrl.navigateRoot('/home');
+    setTimeout(() => SplashScreen.hide(), 2000);
   }
 
   // internalClockSimulator() {

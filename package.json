@@ -1,6 +1,6 @@
 {
   "name": "habigniter",
-  "version": "0.0.1",
+  "version": "1.00",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
@@ -10,7 +10,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "format": "npx prettier --config .prettierrc \"./src/**/*.{ts,html,scss}\" --write"
+    "format": "npx prettier --config .prettierrc \"./src/**/*.{ts,html,scss}\" --write",
+    "deploy": "ionic build --prod && firebase deploy"
   },
   "private": true,
   "dependencies": {
@@ -23,13 +24,16 @@
     "@angular/platform-browser-dynamic": "^16.0.0",
     "@angular/router": "^16.0.0",
     "@angular/service-worker": "^16.0.0",
+    "@capacitor/android": "^5.4.1",
     "@capacitor/app": "5.0.6",
     "@capacitor/core": "5.4.1",
     "@capacitor/haptics": "5.0.6",
     "@capacitor/keyboard": "5.0.6",
-    "@capacitor/preferences": "^5.0.6",
+    "@capacitor/splash-screen": "^5.0.6",
     "@capacitor/status-bar": "5.0.6",
     "@ionic/angular": "^7.0.0",
+    "@ionic/storage": "^4.0.0",
+    "@ionic/storage-angular": "^4.0.0",
     "ionicons": "^7.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

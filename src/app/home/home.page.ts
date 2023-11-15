@@ -28,8 +28,10 @@ export class HomePage implements OnInit {
   private internalClockService = inject(InternalClockService);
 
   public ngOnInit(): void {
-    this.internalClockService.onUpdateActivity.subscribe(() => {
-      this.activities = this.internalClockService.updateActivitiesState(this.activities);
+    this.internalClockService.onUpdateActivity.subscribe((daysSince) => {
+      for (let i = 0; i < daysSince; i++) {
+        this.activities = this.internalClockService.updateActivitiesState(this.activities);
+      }
     });
     this.activities = this.localDBService.Activities;
     this.internalClockService.initialize();
