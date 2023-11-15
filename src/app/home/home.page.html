@@ -7,33 +7,27 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <app-activity-card
-          [activity]="activity"
-          *ngFor="let activity of activities; index as ind"
-          (edit)="enableEditMode(activity)"
-          (delete)="deleteActivity(activity?.id)"
-          (complete)="completeActivity(ind)"
-        ></app-activity-card>
+        <app-activity-card [activity]="activity" *ngFor="let activity of activities; index as ind"
+          (edit)="enableEditMode(activity)" (delete)="deleteActivity(activity?.id)"
+          (complete)="completeActivity(ind)"></app-activity-card>
       </ion-col>
     </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
     <ion-row>
-      <ion-col class="flex-col">
-        <ion-button id="open-modal" size="large">
+      <ion-col>
+        <ion-button expand="block" id="open-modal" size="large">
           <ion-icon slot="start" name="add"></ion-icon>
           <ion-label>Agregar</ion-label>
         </ion-button>
       </ion-col>
     </ion-row>
-  </ion-grid>
-</ion-content>
+  </ion-toolbar>
+</ion-footer>
 
-<ion-modal
-  (onDidDismiss)="resetForm()"
-  #form
-  trigger="open-modal"
-  cssClass="auto-height"
-  [backdropDismiss]="true"
->
+<ion-modal (onDidDismiss)="resetForm()" #form trigger="open-modal" cssClass="auto-height" [backdropDismiss]="true">
   <ng-template>
     <div class="content">
       <ion-grid>
