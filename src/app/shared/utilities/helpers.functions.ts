@@ -19,3 +19,7 @@ export const buildLocalDateFromCurrentUTC = () => {
 
   return utcWithUserOffset.toISOString();
 };
+
+export const getDaysBetweenDates = (startDate: number, endDate: number): number => {
+  return endDate - startDate;
+}

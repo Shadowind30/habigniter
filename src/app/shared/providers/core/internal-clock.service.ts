@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { dateToNumber, getDate } from '@shared/utilities/helpers.functions';
+import { dateToNumber, getDate, getDaysBetweenDates } from '@shared/utilities/helpers.functions';
 import { LocalDbService } from '../external/local-db.service';
 import { DBKeysEnum } from '@shared/enums/db-keys.enum';
 import { Subject } from 'rxjs';
@@ -9,9 +9,9 @@ import { IActivityItem } from '@shared/models';
   providedIn: 'root'
 })
 export class InternalClockService {
-  private _updateActivitiesSubject = new Subject<void>();
+  private _updateActivitiesSubject = new Subject<number>();
 
-  public get onUpdateActivity(): Subject<void> {
+  public get onUpdateActivity(): Subject<number> {
     return this._updateActivitiesSubject;
   }
 
@@ -35,17 +35,18 @@ export class InternalClockService {
     });
   }
   private checkDate() {
-    if (this.isSameDay()) return;
+    const daysSince = this.daysSince();
+    if (daysSince === 0) return;
     const currentDay = getDate();
     this.localDBService.saveData(DBKeysEnum.SAVED_DAY, dateToNumber(currentDay));
-    this._updateActivitiesSubject.next();
+    this._updateActivitiesSubject.next(daysSince);
   }
 
-  private isSameDay(): boolean {
+  private daysSince(): number {
     const currentDay = getDate();
     const savedDay = this.localDBService.SavedDay;
-    const check = dateToNumber(currentDay) === savedDay;
-    console.log('[CLOCK] Is same day?', check);
-    return check;
+    const days = getDaysBetweenDates(savedDay, dateToNumber(currentDay));
+    console.log('[CLOCK] Days since last check?', days);
+    return days;
   }
 }
