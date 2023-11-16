@@ -18,16 +18,20 @@ bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     importProvidersFrom([
-      IonicModule.forRoot({ mode: 'ios' }),
-      IonicStorageModule.forRoot({
-        name: 'habigniter_DB',
-        driverOrder: [Drivers.LocalStorage]
-      })
+        IonicModule.forRoot({ mode: 'ios' }),
+        IonicStorageModule.forRoot({
+            name: 'habigniter_DB',
+            driverOrder: [Drivers.LocalStorage]
+        })
     ]),
     provideRouter(routes),
     provideServiceWorker('ngsw-worker.js', {
-      enabled: !isDevMode(),
-      registrationStrategy: 'registerWhenStable:30000'
+        enabled: !isDevMode(),
+        registrationStrategy: 'registerWhenStable:30000'
+    }),
+    provideServiceWorker('ngsw-worker.js', {
+        enabled: !isDevMode(),
+        registrationStrategy: 'registerWhenStable:30000'
     })
-  ]
+]
 });
