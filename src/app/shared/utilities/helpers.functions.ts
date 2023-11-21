@@ -21,5 +21,6 @@ export const buildLocalDateFromCurrentUTC = () => {
 };
 
 export const getDaysBetweenDates = (startDate: number, endDate: number): number => {
-  return endDate - startDate;
+  const difference =  endDate - startDate;
+  return difference <= 2 ? difference : 2;
 }
