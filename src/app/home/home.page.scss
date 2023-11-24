@@ -8,3 +8,9 @@ ion-footer ion-toolbar {
   --border-style: none;
   --background: transparent;
 }
+
+.empty-text {
+  margin: 35vh 1rem 1rem 1rem;
+  text-align: center;
+  color: var(--ion-color-medium);
+}
