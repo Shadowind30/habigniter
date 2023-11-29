@@ -8,7 +8,8 @@
       "@providers/*": ["app/shared/providers/*"],
       "@enums": ["app/shared/enums/index.ts"],
       "@models": ["app/shared/models/index.ts"],
-      "@consts":["app/shared/consts/index.ts"]
+      "@consts":["app/shared/consts/index.ts"],
+      "@mocks":["app/shared/mocks/index.ts"],
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

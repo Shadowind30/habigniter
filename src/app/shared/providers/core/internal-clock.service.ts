@@ -23,7 +23,7 @@ export class InternalClockService {
     setInterval(() => this.checkDate(), ONE_MINUTE);
   }
 
-  public updateActivitiesState(activities: IActivityItem[]) {
+  public updateActivitiesState(activities: IActivityItem[]): IActivityItem[] {
     console.log('[CLOCK] Updating Activities State');
     return activities.map((activity) => {
       const habit = { ...activity };
