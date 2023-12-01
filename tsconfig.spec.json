@@ -1,18 +1,21 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "extends": "./tsconfig.json",
+  
   "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@shared/*": ["src/app/shared/*"],
+      "@providers/*": ["src/app/shared/providers/*"],
+      "@enums": ["src/app/shared/enums/index.ts"],
+      "@models": ["src/app/shared/models/index.ts"],
+      "@consts": ["src/app/shared/consts/index.ts"],
+      "@mocks": ["src/app/shared/mocks/index.ts"],
+      "@capacitor/*": ["__mocks__/@capacitor/*"]
+    },
     "outDir": "./out-tsc/spec",
-    "types": [
-      "jasmine"
-    ]
+    "types": ["jasmine"]
   },
-  "files": [
-    "src/test.ts",
-    "src/polyfills.ts"
-  ],
-  "include": [
-    "src/**/*.spec.ts",
-    "src/**/*.d.ts"
-  ]
+  "files": ["src/test.ts", "src/polyfills.ts"],
+  "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
 }
