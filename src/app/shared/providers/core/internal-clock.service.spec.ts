@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { InternalClockService } from './internal-clock.service';
-import { LocalDbService } from '../external/local-db.service';
+import { LocalDBService } from '../external/local-db.service';
 import { LocalDBServiceMock } from '@shared/mocks';
 
 describe('InternalClockService', () => {
@@ -9,7 +9,7 @@ describe('InternalClockService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [{provide: LocalDbService, useValue: LocalDBServiceMock}]
+      providers: [{provide: LocalDBService, useValue: LocalDBServiceMock}]
     });
     service = TestBed.inject(InternalClockService);
   });

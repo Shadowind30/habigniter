@@ -9,7 +9,7 @@ type Values = IActivityItem[] | number;
 @Injectable({
   providedIn: 'root'
 })
-export class LocalDbService {
+export class LocalDBService {
   private _activities: IActivityItem[] = [];
   private _savedDay: number;
 

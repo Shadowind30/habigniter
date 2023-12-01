@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { dateToNumber, getDate, getDaysBetweenDates } from '@shared/utilities/helpers.functions';
-import { LocalDbService } from '../external/local-db.service';
+import { LocalDBService } from '../external/local-db.service';
 import { DBKeysEnum } from '@shared/enums/db-keys.enum';
 import { Subject } from 'rxjs';
 import { IActivityItem } from '@shared/models';
@@ -15,7 +15,7 @@ export class InternalClockService {
     return this._updateActivitiesSubject;
   }
 
-  private localDBService = inject(LocalDbService);
+  private localDBService = inject(LocalDBService);
 
   public initialize(): void {
     this.checkDate();

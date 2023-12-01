@@ -3,7 +3,7 @@ import { SharedModule } from '../shared/shared.module';
 import { IActivityItem } from '@shared/models';
 import { AlertsService } from '@shared/providers/utilities/alerts.service';
 import { getDate, getRandomID } from '@shared/utilities/helpers.functions';
-import { LocalDbService } from '@shared/providers/external/local-db.service';
+import { LocalDBService } from '@shared/providers/external/local-db.service';
 import { DBKeysEnum } from '@shared/enums/db-keys.enum';
 import { InternalClockService } from '@shared/providers/core/internal-clock.service';
 
@@ -24,7 +24,7 @@ export class HomePage implements OnInit {
   public activityBeingEdited: IActivityItem;
 
   private alertsService = inject(AlertsService);
-  private localDBService = inject(LocalDbService);
+  private localDBService = inject(LocalDBService);
   private internalClockService = inject(InternalClockService);
 
   public ngOnInit(): void {

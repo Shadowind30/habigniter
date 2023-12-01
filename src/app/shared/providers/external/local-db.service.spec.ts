@@ -1,14 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 import {Storage} from '@ionic/storage-angular';
 
-import { LocalDbService } from './local-db.service';
+import { LocalDBService } from './local-db.service';
 
-describe('LocalDbService', () => {
-  let service: LocalDbService;
+describe('LocalDBService', () => {
+  let service: LocalDBService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({providers: [Storage]});
-    service = TestBed.inject(LocalDbService);
+    service = TestBed.inject(LocalDBService);
   });
 
   it('should be created', () => {
