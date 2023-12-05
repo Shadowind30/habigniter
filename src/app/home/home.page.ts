@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { IActivityItem } from '@shared/models';
 import { AlertsService } from '@shared/providers/utilities/alerts.service';
@@ -6,6 +6,7 @@ import { getDate, getRandomID } from '@shared/utilities/helpers.functions';
 import { LocalDBService } from '@shared/providers/external/local-db.service';
 import { DBKeysEnum } from '@shared/enums/db-keys.enum';
 import { InternalClockService } from '@shared/providers/core/internal-clock.service';
+import { Subject, Subscription, debounceTime, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,7 @@ import { InternalClockService } from '@shared/providers/core/internal-clock.serv
   standalone: true,
   imports: [SharedModule]
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy {
   @ViewChild('form') modal: HTMLIonModalElement;
   public modalHeight = 260 / window.innerHeight;
   public nameValue: string;
@@ -27,13 +28,29 @@ export class HomePage implements OnInit {
   private localDBService = inject(LocalDBService);
   private internalClockService = inject(InternalClockService);
 
+  private destroy$ = new Subject<void>();
+  private updateSub: Subscription;
+
   public ngOnInit(): void {
-    this.internalClockService.onUpdateActivity.subscribe((daysSince) => {
+    this.loadData();
+  }
+
+ public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.updateSub.unsubscribe();
+  }
+
+  public loadData() {
+    this.updateSub = this.internalClockService.onUpdateActivity.pipe(
+      debounceTime(60000),
+      takeUntil(this.destroy$)
+    ).subscribe((daysSince) => {
       for (let i = 0; i < daysSince; i++) {
         this.activities = this.internalClockService.updateActivitiesState(this.activities);
       }
     });
-    this.activities = this.localDBService.Activities;
+    this.activities = this.localDBService.getActivities();
     this.internalClockService.initialize();
   }
 
@@ -42,7 +59,7 @@ export class HomePage implements OnInit {
       this.alertsService.simpleAlert(this.errorMessage);
       return;
     }
-    if (this.activityBeingEdited) {
+    if (this.activityBeingEdited && this.activities.length) {
       const index = this.activities.findIndex((activity) => activity.id === this.activityBeingEdited.id);
       this.activities[index].title = this.nameValue;
       this.resetForm();
@@ -91,7 +108,7 @@ export class HomePage implements OnInit {
     this.activityBeingEdited = null;
   }
   private checkValidity(): boolean {
-    return this.nameValue && this.nameValue.length >= 3;
+    return !!this.nameValue && this.nameValue.length >= 3;
   }
 
   private async saveActivities(): Promise<void> {
