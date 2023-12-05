@@ -11,7 +11,9 @@
       "@models": ["src/app/shared/models/index.ts"],
       "@consts": ["src/app/shared/consts/index.ts"],
       "@mocks": ["src/app/shared/mocks/index.ts"],
-      "@capacitor/*": ["__mocks__/@capacitor/*"]
+      "@capacitor/*": ["__mocks__/@capacitor/*"],
+      "@ionic/angular/*": ["__mocks__/@ionic/angular/*"],
+      "@ionic/core/*": ["__mocks__/@ionic/core/*"],
     },
     "outDir": "./out-tsc/spec",
     "types": ["jasmine"]

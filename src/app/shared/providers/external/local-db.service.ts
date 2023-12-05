@@ -15,7 +15,7 @@ export class LocalDBService {
 
   constructor(private storage: Storage) {}
 
-  public get Activities(): IActivityItem[] {
+  public getActivities(): IActivityItem[] {
     return this._activities;
   }
 

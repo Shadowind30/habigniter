@@ -1,6 +1,7 @@
 import { IActivityItem } from '@shared/models';
 import { Subject } from 'rxjs';
 
+const mockSubject = new Subject<number>;
 const MOCK_ACTIVITIES: IActivityItem[] = [
   {
     title: 'local',
@@ -12,7 +13,7 @@ const MOCK_ACTIVITIES: IActivityItem[] = [
 ];
 
 export const InternalClockServiceMock = {
-  onUpdateActivity: new Subject<number>(),
+  onUpdateActivity: mockSubject,
   updateActivitiesState: (activities: IActivityItem[]): IActivityItem[] => MOCK_ACTIVITIES,
   initialize: () => {
     return;
