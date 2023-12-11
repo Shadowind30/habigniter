@@ -5,7 +5,7 @@ import { LocalDBService } from './local-db.service';
 import { DBKeysEnum } from '@shared/enums/db-keys.enum';
 import { ConsoleService } from '../utilities/console.service';
 
-fdescribe('LocalDBService', () => {
+describe('LocalDBService', () => {
   let service: LocalDBService;
   let storage: Storage;
   let consoleService: ConsoleService;
@@ -63,7 +63,7 @@ fdescribe('LocalDBService', () => {
       expect(setSpy).toHaveBeenCalled();
     }));
 
-    fit('should show error message if invalid key was provided', async () => {
+    it('should show error message if invalid key was provided', async () => {
     const errorSpy = spyOn(consoleService, 'error');
 
       await service.init();
