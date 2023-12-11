@@ -33,7 +33,7 @@
         <ion-col class="flex-end" size="6">
           <ion-button
             [disabled]="activity?.status === 'completed'"
-            (click)="complete.emit()"
+            (click)="completeEvent.emit()"
             [color]="activity?.status === 'pending' ? 'primary' : 'medium'"
           >
             <ion-icon slot="start" name="checkmark-circle"></ion-icon>

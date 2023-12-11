@@ -9,7 +9,7 @@ import { IActivityItem } from '@shared/models';
 export class ActivityCardComponent implements OnInit {
   @Output() public edit = new EventEmitter<void>();
   @Output() public delete = new EventEmitter<void>();
-  @Output() public complete = new EventEmitter<void>();
+  @Output() public completeEvent = new EventEmitter<void>();
   @Input() public activity: IActivityItem;
 
   constructor() {}

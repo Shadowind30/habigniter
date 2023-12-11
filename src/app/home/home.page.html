@@ -10,7 +10,7 @@
         @for( activity of activities; track activity.id;) {
           <app-activity-card [activity]="activity"
           (edit)="enableEditMode(activity)" (delete)="deleteActivity(activity?.id)"
-          (complete)="completeActivity($index)"></app-activity-card>
+          (completeEvent)="completeActivity($index)"></app-activity-card>
         } @empty {
           <h1 class="empty-text">No has agregado ninguna actividad</h1>
         }
