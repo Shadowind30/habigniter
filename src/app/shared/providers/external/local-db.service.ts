@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
 import { IActivityItem } from '@models';
 import { DBKeysEnum } from '@shared/enums/db-keys.enum';
+import { ConsoleService } from '../utilities/console.service';
 
 type Values = IActivityItem[] | number;
 
@@ -13,7 +14,7 @@ export class LocalDBService {
   private _activities: IActivityItem[] = [];
   private _savedDay: number;
 
-  constructor(private storage: Storage) {}
+  constructor(private storage: Storage, private consoleService: ConsoleService) {}
 
   public getActivities(): IActivityItem[] {
     return this._activities;
@@ -32,8 +33,13 @@ export class LocalDBService {
   }
 
   public async init(): Promise<void> {
-    await this.storage.create();
-    await this.initFromDB();
+    try {
+      await this.storage.create();
+      await this.initFromDB();
+      this.consoleService.log('[LOCAL] init');
+    } catch(error) {
+      this.consoleService.error('[LOCAL] Error durng initialization', error);
+    }
   }
 
   /**
@@ -59,8 +65,8 @@ export class LocalDBService {
         this.updateSavedDay = data as number;
         break;
       default:
-        console.error(`
-        [LOCAL-DB]
+        this.consoleService.error(`
+        [LOCAL]
         RAZON: El tokenKey -> ${tokenKey}' <- no existe, revise el enum TokenKeys para ver posibles valores
         y agregue el tokenKey de ser necesario.
         PARAMETROS: ${JSON.stringify(arguments)}
@@ -69,7 +75,7 @@ export class LocalDBService {
     }
 
     if (!willUpdate) {
-      console.log(`[LOCAL-DB] TokenKey ${tokenKey} eliminado`);
+      this.consoleService.log(`[LOCAL-DB] TokenKey ${tokenKey} eliminado`);
     }
   }
 
@@ -84,13 +90,15 @@ export class LocalDBService {
     if (!!ACTIVITIES) {
       this.updateActivities = JSON.parse(ACTIVITIES) as IActivityItem[];
     } else {
-      console.warn('[LOCAL] No hay habitos guardadas');
+      this.consoleService.warn('[LOCAL] No hay habitos guardadas');
     }
 
     if (!!SAVED_DAY) {
       this.updateSavedDay = JSON.parse(SAVED_DAY) as number;
     } else {
-      console.warn('[LOCAL] No hay dia guardado');
+      this.consoleService.warn('[LOCAL] No hay dia guardado');
     }
   }
 }
+export { DBKeysEnum };
+

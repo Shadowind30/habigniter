@@ -5,7 +5,7 @@ import { LocalDBService } from '@shared/providers/external/local-db.service';
 @Injectable()
 export class LocalDBServiceMock extends LocalDBService {
   constructor() {
-    super(null);
+    super(null, console);
   }
 
   public override async init(): Promise<void> {
