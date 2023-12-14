@@ -19,9 +19,4 @@ export class ConsoleService {
     if (environment.production) return;
     console.warn(message, ...optionalParams);
   }
-
-  info(message?: any, ...optionalParams: any[]): void {
-    if (environment.production) return;
-    console.info(message, ...optionalParams);
-  }
 }
