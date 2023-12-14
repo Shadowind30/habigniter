@@ -7,13 +7,14 @@ import { LocalDBService } from '@shared/providers/external/local-db.service';
 import { DBKeysEnum } from '@shared/enums/db-keys.enum';
 import { InternalClockService } from '@shared/providers/core/internal-clock.service';
 import { Subject, Subscription, debounceTime, takeUntil } from 'rxjs';
+import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [SharedModule]
+  imports: [SharedModule, CdkDropList, CdkDrag]
 })
 export class HomePage implements OnInit, OnDestroy {
   @ViewChild('form') modal: HTMLIonModalElement;
@@ -84,6 +85,14 @@ export class HomePage implements OnInit, OnDestroy {
     this.activityBeingEdited = activity;
     this.nameValue = activity.title;
     this.modal.present();
+  }
+
+  public onItemDrop(event: CdkDragDrop<IActivityItem[]>): void {
+ const { previousIndex, currentIndex } = event;
+    const item = this.activities[previousIndex];
+    this.activities.splice(previousIndex, 1);
+    this.activities.splice(currentIndex, 0, item);
+    this.saveActivities();
   }
 
   public async deleteActivity(id: string): Promise<void> {
