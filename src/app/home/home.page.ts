@@ -7,14 +7,14 @@ import { LocalDBService } from '@shared/providers/external/local-db.service';
 import { DBKeysEnum } from '@shared/enums/db-keys.enum';
 import { InternalClockService } from '@shared/providers/core/internal-clock.service';
 import { Subject, Subscription, debounceTime, takeUntil } from 'rxjs';
-import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, CdkDropList, CdkDragPreview, CdkDragPlaceholder } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [SharedModule, CdkDropList, CdkDrag]
+  imports: [SharedModule, CdkDropList, CdkDrag, CdkDragPlaceholder, CdkDragPreview]
 })
 export class HomePage implements OnInit, OnDestroy {
   @ViewChild('form') modal: HTMLIonModalElement;

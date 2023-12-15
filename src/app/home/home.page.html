@@ -6,7 +6,7 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col cdkDropList (cdkDropListDropped)="onItemDrop($event)">
+      <div cdkDropList (cdkDropListDropped)="onItemDrop($event)">
         @for( activity of activities; track activity.id;) {
         <div cdkDrag [cdkDragStartDelay]="100">
           <app-activity-card
@@ -15,12 +15,15 @@
             (delete)="deleteActivity(activity?.id)"
             (completeEvent)="completeActivity($index)"
           >
-          </app-activity-card>
+        </app-activity-card>
+        <div *cdkDragPlaceholder style="min-height: 200px;">
+          <ion-card color="warning" style="min-height: 200px;"></ion-card>
+        </div>
         </div>
         } @empty {
         <h1 class="empty-text">No has agregado ninguna actividad</h1>
         }
-      </ion-col>
+      </div>
     </ion-row>
   </ion-grid>
 </ion-content>
