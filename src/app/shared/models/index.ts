@@ -4,6 +4,13 @@ interface IActivityItem {
   status: 'pending' | 'completed';
   createdAt: string;
   streak: number;
+  tasks?: ITask[];
 }
 
-export { IActivityItem };
+interface ITask {
+  id: string;
+  title: string;
+  completed: boolean;
+}
+
+export { IActivityItem, ITask };

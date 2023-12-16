@@ -36,23 +36,23 @@ export class HomePage implements OnInit, OnDestroy {
     this.loadData();
   }
 
- public ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
     this.updateSub.unsubscribe();
   }
 
   public loadData() {
-    this.updateSub = this.internalClockService.onUpdateActivity.pipe(
-      debounceTime(60000),
-      takeUntil(this.destroy$)
-    ).subscribe((daysSince) => {
-      for (let i = 0; i < daysSince; i++) {
-        this.activities = this.internalClockService.updateActivitiesState(this.activities);
-      }
-    });
+    this.updateSub = this.internalClockService.onUpdateActivity
+      .pipe(debounceTime(60000), takeUntil(this.destroy$))
+      .subscribe((daysSince) => {
+        for (let i = 0; i < daysSince; i++) {
+          this.activities = this.internalClockService.updateActivitiesState(this.activities);
+        }
+      });
     this.activities = this.localDBService.getActivities();
     this.internalClockService.initialize();
+    console.log(this.activities);
   }
 
   public async addActivity(): Promise<void> {
@@ -88,7 +88,7 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   public onItemDrop(event: CdkDragDrop<IActivityItem[]>): void {
- const { previousIndex, currentIndex } = event;
+    const { previousIndex, currentIndex } = event;
     const item = this.activities[previousIndex];
     this.activities.splice(previousIndex, 1);
     this.activities.splice(currentIndex, 0, item);

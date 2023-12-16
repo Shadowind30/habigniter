@@ -16,13 +16,42 @@
         >
       </ion-col>
     </ion-row>
-    <ion-card-subtitle [color]="activity?.status === 'pending' ? 'danger' : 'success'">{{
-      activity?.status === 'pending' ? 'Pendiente' : 'Completado'
-    }}</ion-card-subtitle>
+    <ion-card-subtitle [color]="activity?.status === 'pending' ? 'danger' : 'success'"
+      >{{ activity?.status === 'pending' ? 'Pendiente' : 'Completado' }}
+      @if (activity?.tasks) {
+        {{ progress }} %
+        <ion-progress-bar [value]="progress / 100"></ion-progress-bar>
+      }
+    </ion-card-subtitle>
   </ion-card-header>
 
   <ion-card-content>
     <ion-grid>
+      @if (activity?.tasks) {
+        <ion-row>
+          <ion-col>
+            <ion-label>Tareas</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-list>
+              @for (task of activity?.tasks; track task.id) {
+                <ion-item>
+                  <ion-checkbox
+                    [disabled]="activity.status === 'completed' && progress >= 100"
+                    [checked]="task?.completed"
+                    color="success"
+                    (ionChange)="onTaskChange($index, $event)"
+                  >
+                    {{ task?.title }}
+                  </ion-checkbox>
+                </ion-item>
+              }
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      }
       <ion-row>
         <ion-col size="6">
           <ion-button (click)="delete.emit()" color="danger" fill="clear">
@@ -32,7 +61,7 @@
         </ion-col>
         <ion-col class="flex-end" size="6">
           <ion-button
-            [disabled]="activity?.status === 'completed'"
+            [disabled]="activity?.status === 'completed' || progress < 100"
             (click)="completeEvent.emit()"
             [color]="activity?.status === 'pending' ? 'primary' : 'medium'"
           >

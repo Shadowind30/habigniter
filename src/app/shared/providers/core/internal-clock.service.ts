@@ -30,6 +30,12 @@ export class InternalClockService {
       if (habit.status === 'pending') {
         habit.streak = 0;
       }
+      if('tasks' in habit) {
+        habit.tasks = habit.tasks.map((task) => {
+          task.completed = false;
+          return task;
+        });
+      }
       habit.status = 'pending';
       return habit;
     });
