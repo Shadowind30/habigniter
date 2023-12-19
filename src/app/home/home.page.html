@@ -11,7 +11,7 @@
         <div cdkDrag [cdkDragStartDelay]="100">
           <app-activity-card
             [activity]="activity"
-            (edit)="enableEditMode(activity)"
+            (edit)="openActivityForm(action.EDIT, activity)"
             (delete)="deleteActivity(activity?.id)"
             (completeEvent)="completeActivity($index)"
           >
@@ -31,7 +31,7 @@
   <ion-toolbar>
     <ion-row>
       <ion-col>
-        <ion-button expand="block" id="open-modal" size="large">
+        <ion-button expand="block" (click)="openActivityForm(action.CREATE)" size="large">
           <ion-icon slot="start" name="add"></ion-icon>
           <ion-label>Agregar</ion-label>
         </ion-button>
@@ -39,32 +39,3 @@
     </ion-row>
   </ion-toolbar>
 </ion-footer>
-
-<ion-modal (onDidDismiss)="resetForm()" #form trigger="open-modal" cssClass="auto-height" [backdropDismiss]="true">
-  <ng-template>
-    <div class="content">
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <h1>{{!activityBeingEdited ? 'Crear nuevo habito' : 'Editar Habito'}}</h1>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <ion-item>
-              <ion-input [(ngModel)]="nameValue" label="Nombre" labelPlacement="floating" type="text"></ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <ion-button expand="block" (click)="addActivity()" size="large">
-              <ion-icon slot="start" name="add"></ion-icon>
-              <ion-label>Guardar</ion-label>
-            </ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
-  </ng-template>
-</ion-modal>

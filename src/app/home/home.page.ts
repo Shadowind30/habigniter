@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
-import { IActivityItem } from '@shared/models';
+import { IActivityItem, ITask } from '@shared/models';
 import { AlertsService } from '@shared/providers/utilities/alerts.service';
 import { getDate, getRandomID } from '@shared/utilities/helpers.functions';
 import { LocalDBService } from '@shared/providers/external/local-db.service';
@@ -8,6 +8,10 @@ import { DBKeysEnum } from '@shared/enums/db-keys.enum';
 import { InternalClockService } from '@shared/providers/core/internal-clock.service';
 import { Subject, Subscription, debounceTime, takeUntil } from 'rxjs';
 import { CdkDrag, CdkDragDrop, CdkDropList, CdkDragPreview, CdkDragPlaceholder } from '@angular/cdk/drag-drop';
+import { FormActionsEnum } from '@shared/enums/actions.enums';
+import { ModalController } from '@ionic/angular';
+import { ActivityFormComponent } from '@shared/modals/activity-form/activity-form.component';
+import { RolesEnum } from '@shared/enums/roles.enum';
 
 @Component({
   selector: 'app-home',
@@ -17,17 +21,15 @@ import { CdkDrag, CdkDragDrop, CdkDropList, CdkDragPreview, CdkDragPlaceholder }
   imports: [SharedModule, CdkDropList, CdkDrag, CdkDragPlaceholder, CdkDragPreview]
 })
 export class HomePage implements OnInit, OnDestroy {
-  @ViewChild('form') modal: HTMLIonModalElement;
   public modalHeight = 260 / window.innerHeight;
-  public nameValue: string;
-  public errorMessage = 'El nombre debe de contener al menos 3 caracteres';
+  public action = FormActionsEnum;
 
   public activities: IActivityItem[] = [];
-  public activityBeingEdited: IActivityItem;
 
   private alertsService = inject(AlertsService);
   private localDBService = inject(LocalDBService);
   private internalClockService = inject(InternalClockService);
+  private modalCtrl = inject(ModalController);
 
   private destroy$ = new Subject<void>();
   private updateSub: Subscription;
@@ -55,36 +57,32 @@ export class HomePage implements OnInit, OnDestroy {
     console.log(this.activities);
   }
 
-  public async addActivity(): Promise<void> {
-    if (!this.checkValidity()) {
-      this.alertsService.simpleAlert(this.errorMessage);
-      return;
-    }
-    if (this.activityBeingEdited && this.activities.length) {
-      const index = this.activities.findIndex((activity) => activity.id === this.activityBeingEdited.id);
-      this.activities[index].title = this.nameValue;
-      this.resetForm();
-      this.modal.dismiss();
-      this.saveActivities();
-      return;
-    }
-    this.activities.push({
-      title: this.nameValue,
-      status: 'pending',
-      createdAt: getDate(),
-      streak: 0,
-      id: getRandomID()
+  public async openActivityForm(action: FormActionsEnum, activity?: IActivityItem): Promise<void> {
+    const modal = await this.modalCtrl.create({
+      component: ActivityFormComponent,
+      cssClass: 'auto-height',
+      componentProps: {
+        action,
+        activity
+      }
     });
 
-    this.modal.dismiss();
-    this.nameValue = null;
-    this.saveActivities();
-  }
+    await modal.present();
 
-  public enableEditMode(activity: IActivityItem): void {
-    this.activityBeingEdited = activity;
-    this.nameValue = activity.title;
-    this.modal.present();
+    const { data: formActivity, role } = await modal.onWillDismiss();
+
+    if (!formActivity || role !== RolesEnum.CONFIRM) return;
+
+    if (action === FormActionsEnum.CREATE) {
+      this.activities.unshift(formActivity);
+      this.saveActivities();
+    }
+
+    if (action === FormActionsEnum.EDIT) {
+      const index = this.activities.findIndex((activity) => activity.id === formActivity.id);
+      this.activities[index] = formActivity;
+      this.saveActivities();
+    }
   }
 
   public onItemDrop(event: CdkDragDrop<IActivityItem[]>): void {
@@ -92,6 +90,12 @@ export class HomePage implements OnInit, OnDestroy {
     const item = this.activities[previousIndex];
     this.activities.splice(previousIndex, 1);
     this.activities.splice(currentIndex, 0, item);
+    this.saveActivities();
+  }
+
+  public completeActivity(index: number): void {
+    this.activities[index].streak++;
+    this.activities[index].status = 'completed';
     this.saveActivities();
   }
 
@@ -104,20 +108,6 @@ export class HomePage implements OnInit, OnDestroy {
     if (!shouldContinue) return;
     this.activities = this.activities.filter((activity) => activity.id !== id);
     this.saveActivities();
-  }
-
-  public completeActivity(index: number): void {
-    this.activities[index].streak++;
-    this.activities[index].status = 'completed';
-    this.saveActivities();
-  }
-
-  public resetForm(): void {
-    this.nameValue = null;
-    this.activityBeingEdited = null;
-  }
-  private checkValidity(): boolean {
-    return !!this.nameValue && this.nameValue.length >= 3;
   }
 
   private async saveActivities(): Promise<void> {

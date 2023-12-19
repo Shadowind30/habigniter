@@ -25,7 +25,7 @@ export class InternalClockService {
 
   public updateActivitiesState(activities: IActivityItem[]): IActivityItem[] {
     console.log('[CLOCK] Updating Activities State');
-    return activities.map((activity) => {
+     activities = activities.map((activity) => {
       const habit = { ...activity };
       if (habit.status === 'pending') {
         habit.streak = 0;
@@ -39,6 +39,8 @@ export class InternalClockService {
       habit.status = 'pending';
       return habit;
     });
+    this.localDBService.saveData(DBKeysEnum.ACTIVITIES, activities);
+    return activities;
   }
   private checkDate() {
     const daysSince = this.daysSince();
