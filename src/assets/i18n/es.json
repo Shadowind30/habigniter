@@ -26,6 +26,7 @@
     "not-enough-tasks": "Debe de agregar al menos dos tareas"
   },
   "HOME": {
+    "version": "Versión",
     "my-habits": "Mis hábitos",
     "no-activities": "No has agregado ninguna actividad",
     "delete-habit-header": "¿Estás seguro de que deseas eliminar este hábito?",

@@ -19,13 +19,14 @@
       "tasks": "Tasks",
       "cancel": "Cancel",
       "confirm": "Confirm",
-      "ok": "Understood"
+      "ok": "Ok"
     },
     "ERRORS": {
-      "name-too-short": "The name must have at least 3 characters",
-      "not-enough-tasks": "You must add at least two tasks"
+        "name-too-short": "The name must have at least 3 characters",
+        "not-enough-tasks": "You must add at least two tasks"
     },
     "HOME": {
+        "version": "Version",
       "my-habits": "My habits",
       "no-activities": "You haven't added any activity",
       "delete-habit-header": "Are you sure you want to delete this habit?",

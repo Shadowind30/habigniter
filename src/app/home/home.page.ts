@@ -111,6 +111,13 @@ export class HomePage implements OnInit, OnDestroy {
     this.saveActivities();
   }
 
+  public async showInfo(): Promise<void> {
+    await this.alertsService.simpleAlert(
+      'Habigniter',
+      `${this.translateService.instant('HOME.version')} 1.10`    
+    );
+  }
+
   private async saveActivities(): Promise<void> {
     this.localDBService.saveData(DBKeysEnum.ACTIVITIES, this.activities);
   }
