@@ -11,6 +11,7 @@ import { FormActionsEnum } from '@shared/enums/actions.enums';
 import { ModalController } from '@ionic/angular';
 import { ActivityFormComponent } from '@shared/modals/activity-form/activity-form.component';
 import { RolesEnum } from '@shared/enums/roles.enum';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -29,6 +30,7 @@ export class HomePage implements OnInit, OnDestroy {
   private localDBService = inject(LocalDBService);
   private internalClockService = inject(InternalClockService);
   private modalCtrl = inject(ModalController);
+  private translateService = inject(TranslateService);
 
   private destroy$ = new Subject<void>();
   private updateSub: Subscription;
@@ -100,9 +102,9 @@ export class HomePage implements OnInit, OnDestroy {
 
   public async deleteActivity(id: string): Promise<void> {
     const shouldContinue = await this.alertsService.confirmationAlert({
-      header: 'Deseas borrar este habito?',
-      subHeader: 'Esta accion no se puede deshacer',
-      confirmText: 'Eliminar'
+      header: this.translateService.instant('HOME.delete-habit-header'),
+      subHeader: this.translateService.instant('HOME.delete-habit-subheader'),
+      confirmText: this.translateService.instant('COMMON.delete'),
     });
     if (!shouldContinue) return;
     this.activities = this.activities.filter((activity) => activity.id !== id);

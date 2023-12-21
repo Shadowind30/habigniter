@@ -1,5 +1,38 @@
 {
+  "ACTIVITY-CARD": {
+    "day": "Día",
+    "days": "Días"
+  },
+  "ACTIVITY-FORM": {
+    "create-new-habit": "Crear nuevo hábito",
+    "edit-habit": "Editar hábito",
+    "name": "Nombre",
+    "include-tasks": "Incluir tareas",
+    "task": "Tarea"
+  },
+  "COMMON": {
+    "add": "Añadir",
+    "save": "Guardar",
+    "complete": "Completar",
+    "completed": "Completado",
+    "delete": "Eliminar",
+    "tasks": "Tareas",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "ok": "Entendido"
+  },
+  "ERRORS": {
+    "name-too-short": "El nombre debe tener al menos 3 caracteres",
+    "not-enough-tasks": "Debe de agregar al menos dos tareas"
+  },
   "HOME": {
-    "my-habits": "Mis hábitos"
+    "my-habits": "Mis hábitos",
+    "no-activities": "No has agregado ninguna actividad",
+    "delete-habit-header": "¿Estás seguro de que deseas eliminar este hábito?",
+    "delete-habit-subheader": "Esta acción no se puede deshacer"
+  },
+  "STATUS": {
+    "pending": "Pendiente",
+    "completed": "Completado"
   }
 }

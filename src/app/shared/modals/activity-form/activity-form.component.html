@@ -2,13 +2,13 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <h1>{{ action === actions.CREATE ? 'Crear nuevo habito' : 'Editar Habito' }}</h1>
+        <h1>{{ ('ACTIVITY-FORM.' + (action === actions.CREATE ? 'create-new-habit' : 'edit-habit')) | translate }}</h1>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-input [(ngModel)]="nameValue" label="Nombre" labelPlacement="floating" type="text"></ion-input>
+          <ion-input [(ngModel)]="nameValue" [label]="'ACTIVITY-FORM.name' | translate" labelPlacement="floating" type="text"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -16,14 +16,14 @@
       <ion-col>
         <ion-item>
           <ion-checkbox [disabled]="disableTaskEdition" [(ngModel)]="includeTasks"></ion-checkbox>
-          <ion-label>Incluir tareas</ion-label>
+          <ion-label>{{'ACTIVITY-FORM.include-tasks' | translate}}</ion-label>
         </ion-item>
       </ion-col>
     </ion-row>
     <ion-row *ngIf="includeTasks">
       <ion-col>
         <ion-item>
-          <ion-input [disabled]="disableTaskEdition" [(ngModel)]="taskName" label="Tarea" labelPlacement="floating"></ion-input>
+          <ion-input [disabled]="disableTaskEdition" [(ngModel)]="taskName" [label]="'ACTIVITY-FORM.task' | translate" labelPlacement="floating"></ion-input>
           <ion-button [disabled]="disableTaskEdition" (click)="addTask()" slot="end" fill="clear">
             <ion-icon name="add"></ion-icon>
           </ion-button>
@@ -46,7 +46,7 @@
       <ion-col>
         <ion-button expand="block" (click)="saveActivity()" size="large">
           <ion-icon slot="start" name="add"></ion-icon>
-          <ion-label>Guardar</ion-label>
+          <ion-label>{{'COMMON.save' | translate}}</ion-label>
         </ion-button>
       </ion-col>
     </ion-row>

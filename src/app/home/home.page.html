@@ -21,7 +21,7 @@
         </div>
         </div>
         } @empty {
-        <h1 class="empty-text">No has agregado ninguna actividad</h1>
+        <h1 class="empty-text">{{'HOME.no-activities' | translate}}</h1>
         }
       </div>
     </ion-row>
@@ -33,7 +33,7 @@
       <ion-col>
         <ion-button expand="block" (click)="openActivityForm(action.CREATE)" size="large">
           <ion-icon slot="start" name="add"></ion-icon>
-          <ion-label>Agregar</ion-label>
+          <ion-label>{{'COMMON.add' | translate}}</ion-label>
         </ion-button>
       </ion-col>
     </ion-row>

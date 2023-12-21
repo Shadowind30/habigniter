@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { AlertButton, AlertController, AlertOptions } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { RolesEnum } from '@shared/enums/roles.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AlertsService {
-  constructor(private alertCtrl: AlertController) {}
+  constructor(private alertCtrl: AlertController, private translateService: TranslateService) {}
 
   public async simpleAlert(header: string, subHeader?: string): Promise<HTMLIonAlertElement> {
-    const button = ['Entendido'];
+    const button = [this.translateService.instant('COMMON.ok')];
     const options = {
       header,
       subHeader,
@@ -25,8 +26,8 @@ export class AlertsService {
     confirmText?: string;
   }): Promise<boolean> {
     const { cancelText, confirmText, ...rest } = options;
-    const btnCancelText = cancelText || 'Cancelar';
-    const btnConfirmText = confirmText || 'Confirmar';
+    const btnCancelText = cancelText || this.translateService.instant('COMMON.cancel');
+    const btnConfirmText = confirmText || this.translateService.instant('COMMON.confirm');
 
     const buttons: AlertButton[] = [
       {

@@ -1,5 +1,39 @@
 {
+    "ACTIVITY-CARD": {
+      "day": "Day",
+      "days": "Days"
+    },
+    "ACTIVITY-FORM": {
+      "create-new-habit": "Create new habit",
+      "edit-habit": "Edit habit",
+      "name": "Name",
+      "include-tasks": "Include tasks",
+      "task": "Task"
+    },
+    "COMMON": {
+      "add": "Add",
+      "save": "Save",
+      "complete": "Complete",
+      "completed": "Completed",
+      "delete": "Delete",
+      "tasks": "Tasks",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "ok": "Understood"
+    },
+    "ERRORS": {
+      "name-too-short": "The name must have at least 3 characters",
+      "not-enough-tasks": "You must add at least two tasks"
+    },
     "HOME": {
-        "my-habits": "My Habits"
+      "my-habits": "My habits",
+      "no-activities": "You haven't added any activity",
+      "delete-habit-header": "Are you sure you want to delete this habit?",
+      "delete-habit-subheader": "This action cannot be undone"
+    },
+    "STATUS": {
+      "pending": "Pending",
+      "completed": "Completed"
     }
-}
+  }
+  

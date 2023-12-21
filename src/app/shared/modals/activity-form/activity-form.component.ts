@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { FormActionsEnum } from '@shared/enums/actions.enums';
 import { RolesEnum } from '@shared/enums/roles.enum';
 import { IActivityItem, ITask } from '@shared/models';
@@ -17,8 +18,8 @@ export class ActivityFormComponent  implements OnInit {
   public actions = FormActionsEnum;
   
   public nameValue: string;
-  public errorMessage = 'El nombre debe de contener al menos 3 caracteres';
-  public minTasksMessage = 'Debes de agregar al menos dos tareas';
+  public errorMessage = 'ERRORS.name-too-short';
+  public minTasksMessage = 'ERRORS.not-enough-tasks';
 
   public includeTasks: boolean;
   public taskName: string;
@@ -27,6 +28,7 @@ export class ActivityFormComponent  implements OnInit {
   public disableTaskEdition: boolean;
 
   private alertsService = inject(AlertsService);
+  private translateService = inject(TranslateService);
   private modal: HTMLIonModalElement;
 
   ngOnInit() {
@@ -35,12 +37,12 @@ export class ActivityFormComponent  implements OnInit {
 
   public async saveActivity(): Promise<void> {
     if (!this.checkValidity(this.nameValue)) {
-      this.alertsService.simpleAlert(this.errorMessage);
+      this.alertsService.simpleAlert(this.translateService.instant(this.errorMessage));
       return;
     }
 
     if (this.includeTasks && this.currentTasks.length < 2) {
-      this.alertsService.simpleAlert(this.minTasksMessage);
+      this.alertsService.simpleAlert(this.translateService.instant(this.minTasksMessage));
       return;
     }
 
