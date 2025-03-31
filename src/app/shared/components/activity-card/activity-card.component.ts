@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IActivityItem, ITask } from '@shared/models';
+import { SharedModule } from '@shared/shared.module';
 
 @Component({
   selector: 'app-activity-card',
   templateUrl: './activity-card.component.html',
-  styleUrls: ['./activity-card.component.scss']
+  styleUrls: ['./activity-card.component.scss'],
+  imports: [SharedModule]
 })
 export class ActivityCardComponent implements OnInit {
   @Output() public edit = new EventEmitter<void>();

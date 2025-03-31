@@ -6,19 +6,20 @@ import { LocalDBService } from '@shared/providers/external/local-db.service';
 import { DBKeysEnum } from '@shared/enums/db-keys.enum';
 import { InternalClockService } from '@shared/providers/core/internal-clock.service';
 import { Subject, Subscription, debounceTime, takeUntil } from 'rxjs';
-import { CdkDrag, CdkDragDrop, CdkDropList, CdkDragPreview, CdkDragPlaceholder } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, CdkDropList, CdkDragPlaceholder } from '@angular/cdk/drag-drop';
 import { FormActionsEnum } from '@shared/enums/actions.enums';
 import { ModalController } from '@ionic/angular';
 import { ActivityFormComponent } from '@shared/modals/activity-form/activity-form.component';
 import { RolesEnum } from '@shared/enums/roles.enum';
 import { TranslateService } from '@ngx-translate/core';
+import { ActivityCardComponent } from '@shared/components/activity-card/activity-card.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [SharedModule, CdkDropList, CdkDrag, CdkDragPlaceholder, CdkDragPreview]
+  imports: [ActivityCardComponent, SharedModule, CdkDropList, CdkDrag, CdkDragPlaceholder]
 })
 export class HomePage implements OnInit, OnDestroy {
   public modalHeight = 260 / window.innerHeight;

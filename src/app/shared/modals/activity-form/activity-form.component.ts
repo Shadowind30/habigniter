@@ -4,12 +4,14 @@ import { FormActionsEnum } from '@shared/enums/actions.enums';
 import { RolesEnum } from '@shared/enums/roles.enum';
 import { IActivityItem, ITask } from '@shared/models';
 import { AlertsService } from '@shared/providers/utilities/alerts.service';
+import { SharedModule } from '@shared/shared.module';
 import { getDate, getRandomID } from '@shared/utilities/helpers.functions';
 
 @Component({
   selector: 'app-activity-form',
   templateUrl: './activity-form.component.html',
   styleUrls: ['./activity-form.component.scss'],
+  imports: [SharedModule]
 })
 export class ActivityFormComponent  implements OnInit {
 
