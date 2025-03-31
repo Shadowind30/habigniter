@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { SharedModule } from '../shared/shared.module';
 import { IActivityItem } from '@shared/models';
 import { AlertsService } from '@shared/providers/utilities/alerts.service';
 import { LocalDBService } from '@shared/providers/external/local-db.service';
@@ -9,17 +8,46 @@ import { Subject, Subscription, debounceTime, takeUntil } from 'rxjs';
 import { CdkDrag, CdkDragDrop, CdkDropList, CdkDragPlaceholder } from '@angular/cdk/drag-drop';
 import { FormActionsEnum } from '@shared/enums/actions.enums';
 import { ModalController } from '@ionic/angular';
+import {
+  IonContent,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonCard,
+  IonFooter,
+  IonToolbar,
+  IonFabButton,
+  IonIcon,
+  IonLabel,
+  IonButton
+} from '@ionic/angular/standalone';
 import { ActivityFormComponent } from '@shared/modals/activity-form/activity-form.component';
 import { RolesEnum } from '@shared/enums/roles.enum';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ActivityCardComponent } from '@shared/components/activity-card/activity-card.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  standalone: true,
-  imports: [ActivityCardComponent, SharedModule, CdkDropList, CdkDrag, CdkDragPlaceholder]
+  imports: [
+    ActivityCardComponent,
+    IonContent,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonCard,
+    IonFooter,
+    IonToolbar,
+    IonFabButton,
+    IonIcon,
+    IonLabel,
+    IonButton,
+    CdkDropList,
+    CdkDrag,
+    CdkDragPlaceholder,
+    TranslatePipe
+  ]
 })
 export class HomePage implements OnInit, OnDestroy {
   public modalHeight = 260 / window.innerHeight;
@@ -105,7 +133,7 @@ export class HomePage implements OnInit, OnDestroy {
     const shouldContinue = await this.alertsService.confirmationAlert({
       header: this.translateService.instant('HOME.delete-habit-header'),
       subHeader: this.translateService.instant('HOME.delete-habit-subheader'),
-      confirmText: this.translateService.instant('COMMON.delete'),
+      confirmText: this.translateService.instant('COMMON.delete')
     });
     if (!shouldContinue) return;
     this.activities = this.activities.filter((activity) => activity.id !== id);
@@ -113,10 +141,7 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   public async showInfo(): Promise<void> {
-    await this.alertsService.simpleAlert(
-      'Habigniter',
-      `${this.translateService.instant('HOME.version')} 1.10`    
-    );
+    await this.alertsService.simpleAlert('Habigniter', `${this.translateService.instant('HOME.version')} 1.10`);
   }
 
   private async saveActivities(): Promise<void> {

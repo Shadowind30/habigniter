@@ -1,24 +1,38 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, inject } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
+import { IonGrid, IonRow, IonCol, IonIcon, IonLabel, IonButton, IonItem, IonCheckbox, IonInput } from '@ionic/angular/standalone';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { FormActionsEnum } from '@shared/enums/actions.enums';
 import { RolesEnum } from '@shared/enums/roles.enum';
 import { IActivityItem, ITask } from '@shared/models';
 import { AlertsService } from '@shared/providers/utilities/alerts.service';
-import { SharedModule } from '@shared/shared.module';
 import { getDate, getRandomID } from '@shared/utilities/helpers.functions';
 
 @Component({
   selector: 'app-activity-form',
   templateUrl: './activity-form.component.html',
   styleUrls: ['./activity-form.component.scss'],
-  imports: [SharedModule]
+  imports: [
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonIcon,
+    IonLabel,
+    IonButton,
+    IonItem,
+    IonCheckbox,
+    IonInput,
+    CommonModule,
+    FormsModule,
+    TranslatePipe
+  ]
 })
-export class ActivityFormComponent  implements OnInit {
-
+export class ActivityFormComponent implements OnInit {
   @Input() public action: FormActionsEnum;
   @Input() public activity: IActivityItem;
   public actions = FormActionsEnum;
-  
+
   public nameValue: string;
   public errorMessage = 'ERRORS.name-too-short';
   public minTasksMessage = 'ERRORS.not-enough-tasks';
@@ -34,7 +48,7 @@ export class ActivityFormComponent  implements OnInit {
   private modal: HTMLIonModalElement;
 
   ngOnInit() {
-    this.initForm()
+    this.initForm();
   }
 
   public async saveActivity(): Promise<void> {
@@ -56,7 +70,6 @@ export class ActivityFormComponent  implements OnInit {
       id: this.action === FormActionsEnum.CREATE ? getRandomID() : this.activity.id
     };
 
-  
     if (this.includeTasks && this.currentTasks.length) {
       activityToSave.tasks = this.currentTasks;
     }
@@ -96,19 +109,17 @@ export class ActivityFormComponent  implements OnInit {
   }
 
   public initForm(): void {
-    if(this.action === FormActionsEnum.CREATE) return;
+    if (this.action === FormActionsEnum.CREATE) return;
     const activity = this.activity;
     this.nameValue = activity.title;
-    if('tasks' in activity) {
+    if ('tasks' in activity) {
       this.includeTasks = true;
       this.currentTasks = activity.tasks;
       this.disableTaskEdition = activity.status === 'completed';
     }
   }
 
-
   private checkValidity(value: string): boolean {
     return !!value && value.length >= 3;
   }
-
 }
