@@ -1,12 +1,10 @@
-import { enableProdMode, importProvidersFrom, isDevMode } from '@angular/core';
+import { enableProdMode, isDevMode } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { RouteReuseStrategy, provideRouter } from '@angular/router';
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { TranslateModule, TranslateLoader, provideTranslateService } from '@ngx-translate/core';
+import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
+import { TranslateLoader, provideTranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideServiceWorker } from '@angular/service-worker';
-import { IonicStorageModule } from '@ionic/storage-angular';
-import { Drivers } from '@ionic/storage';
 import { HttpClient, provideHttpClient } from '@angular/common/http';
 
 import { routes } from './app/app.routes';
@@ -32,13 +30,9 @@ bootstrapApplication(AppComponent, {
         deps: [HttpClient]
       }
     }),
-    importProvidersFrom([
-      IonicModule.forRoot({ mode: 'ios' }),
-      IonicStorageModule.forRoot({
-        name: 'habigniter_DB',
-        driverOrder: [Drivers.LocalStorage]
-      })
-    ]),
+    provideIonicAngular({
+      mode: 'ios'
+    }),
     provideRouter(routes),
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),

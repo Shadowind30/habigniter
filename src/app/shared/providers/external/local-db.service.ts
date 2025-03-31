@@ -1,6 +1,5 @@
 /* eslint-disable no-underscore-dangle */
 import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage-angular';
 import { IActivityItem } from '@models';
 import { DBKeysEnum } from '@shared/enums/db-keys.enum';
 import { ConsoleService } from '../utilities/console.service';
@@ -13,8 +12,10 @@ type Values = IActivityItem[] | number;
 export class LocalDBService {
   private _activities: IActivityItem[] = [];
   private _savedDay: number;
+  private readonly DB = 'habigniter_DB/';
+  private storage = localStorage;
 
-  constructor(private storage: Storage, private consoleService: ConsoleService) {}
+  constructor(private consoleService: ConsoleService) {}
 
   public getActivities(): IActivityItem[] {
     return this._activities;
@@ -34,10 +35,9 @@ export class LocalDBService {
 
   public async init(): Promise<void> {
     try {
-      await this.storage.create();
       await this.initFromDB();
       this.consoleService.log('[LOCAL] init');
-    } catch(error) {
+    } catch (error) {
       this.consoleService.error('[LOCAL] Error durng initialization', error);
     }
   }
@@ -50,11 +50,12 @@ export class LocalDBService {
    */
   public async saveData(tokenKey: DBKeysEnum, data: Values): Promise<void> {
     const willUpdate = data !== null;
+    const key = this.DB + tokenKey;
 
     if (willUpdate) {
-      await this.storage.set(tokenKey, JSON.stringify(data));
+      this.storage.setItem(key, JSON.stringify(data));
     } else {
-      await this.storage.remove(tokenKey);
+      this.storage.removeItem(key);
     }
 
     switch (tokenKey) {
@@ -84,8 +85,9 @@ export class LocalDBService {
   // }
 
   private async initFromDB(): Promise<void> {
-    const ACTIVITIES: string = (await this.storage.get(DBKeysEnum.ACTIVITIES)) || null;
-    const SAVED_DAY: string = (await this.storage.get(DBKeysEnum.SAVED_DAY)) || null;
+    const DB = this.DB;
+    const ACTIVITIES: string = this.storage.getItem(DB + DBKeysEnum.ACTIVITIES) || null;
+    const SAVED_DAY: string = this.storage.getItem(DB + DBKeysEnum.SAVED_DAY) || null;
 
     if (!!ACTIVITIES) {
       this.updateActivities = JSON.parse(ACTIVITIES) as IActivityItem[];
@@ -101,4 +103,3 @@ export class LocalDBService {
   }
 }
 export { DBKeysEnum };
-
